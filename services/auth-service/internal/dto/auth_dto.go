@@ -9,9 +9,9 @@ type LoginResponse struct {
 }
 
 type RegisterRequest struct {
-	Username  string `json:"username"`
-	Email     string `json:"email"`
-	Passsword string `json:"passsword"`
+	Username string `json:"username"`
+	Email    string `json:"email"`
+	Password string `json:"passsword"`
 }
 
 type LoginRequest struct {

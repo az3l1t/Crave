@@ -1,11 +1,8 @@
 package repository
 
-import (
-	"auth-service/internal/dto"
-)
+import "auth-service/internal/domain"
 
 type UserRepository interface {
-	RegisterUser(user *dto.RegisterRequest) (*dto.RegisterResponse, error)
-	LoginUser(user *dto.LoginRequest) (*dto.LoginResponse, error)
-	GetByEmail(email string) (*dto.GetByEmailResponse, error)
+	Save(user *domain.User) error
+	GetByEmail(email string) (*domain.User, error)
 }
