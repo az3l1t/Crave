@@ -4,6 +4,7 @@ import (
 	"auth-service/internal/domain"
 	"auth-service/internal/dto"
 	"auth-service/internal/repository"
+	"auth-service/package/utils"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -33,4 +34,25 @@ func (s *UserService) RegisterUser(userDto *dto.RegisterRequest) (*dto.RegisterR
 	}
 
 	return &dto.RegisterResponse{Message: "User registered successfully"}, nil
+}
+
+/*
+TODO LoginUser function implementation
+*/
+func (s *UserService) LoginUser(userDto *dto.LoginRequest) (*dto.LoginResponse, error) {
+	user, err := s.Repository.GetByEmail(userDto.Email)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(userDto.Passsword)); err != nil {
+		return nil, err
+	}
+
+	token, err := utils.GenerateJWT(user.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	return &dto.LoginResponse{Token: token}, nil
 }
