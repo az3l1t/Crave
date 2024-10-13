@@ -8,14 +8,14 @@ RUN go mod download
 
 RUN go build -o auth-service ./cmd/main.go
 
-FROM debian:buster
+FROM gcr.io/distroless/base
 
 WORKDIR /app
 
 COPY --from=builder /app/auth-service .
 
-COPY ./configs /app/configs
+COPY ./cmd /app/configs
 
 EXPOSE 8080
 
-CMD ["/.auth-service"]
+CMD ["./auth-service"]

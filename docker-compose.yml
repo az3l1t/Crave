@@ -1,34 +1,34 @@
+version: '3.8'
+
 services:
-  postgres:
-    image: postgres:15
-    container_name: postgres
+  db:
+    image: postgres:16
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-Chemege1.}
-      POSTGRES_DB: ${POSTGRES_DB:-auth_db}
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Chemege1.
+      POSTGRES_DB: postgres
     ports:
       - "5432:5432"
     networks:
-      - auth-network
+      - delivery_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
 
   auth-service:
     build:
       context: ./services/auth-service
-    container_name: auth-service
-    environment:
-      CONFIG_PATH: "/app/configs/config.yaml"
+      dockerfile: Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - delivery_network
     ports:
       - "8080:8080"
-    depends_on:
-      - postgres
-    networks:
-      - auth-network
-
-volumes:
-  postgres_data:
 
 networks:
-  auth-network:
+  delivery_network:
     driver: bridge

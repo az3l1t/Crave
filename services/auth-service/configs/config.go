@@ -1,7 +1,7 @@
 package configs
 
 import (
-	"log"
+	"fmt"
 
 	"github.com/spf13/viper"
 )
@@ -24,17 +24,20 @@ type JWTConfig struct {
 	Expiration int    `mapstructure:"expiration"`
 }
 
-func LoadConfig(path string) (*Config, error) {
-	viper.SetConfigFile(path)
+func LoadConfig() (*Config, error) {
+	var config Config
+
+	viper.SetConfigName("config")
+	viper.SetConfigType("yaml")
+	viper.AddConfigPath("./configs")
 	viper.AutomaticEnv()
 
 	if err := viper.ReadInConfig(); err != nil {
-		log.Fatal("Error fetching config file: ", err)
+		return &config, fmt.Errorf("error reading config file: %w", err)
 	}
 
-	var config Config
 	if err := viper.Unmarshal(&config); err != nil {
-		return nil, err
+		return &config, fmt.Errorf("error unmarshaling config: %w", err)
 	}
 
 	return &config, nil

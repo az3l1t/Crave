@@ -8,7 +8,7 @@ import (
 )
 
 func GenerateJWT(userID uint) (string, error) {
-	cfg, _ := configs.LoadConfig("/configs/config.yaml")
+	cfg, _ := configs.LoadConfig()
 	claims := jwt.MapClaims{
 		"id":  userID,
 		"exp": time.Now().Add(time.Hour * 24).Unix(),
