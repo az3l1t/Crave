@@ -11,12 +11,12 @@ type LoginResponse struct {
 type RegisterRequest struct {
 	Username string `json:"username"`
 	Email    string `json:"email"`
-	Password string `json:"passsword"`
+	Password string `json:"password"`
 }
 
 type LoginRequest struct {
-	Email     string `json:"username"`
-	Passsword string `json:"passsword"`
+	Email     string `json:"email"`
+	Passsword string `json:"password"`
 }
 
 type GetByEmailResponse struct {

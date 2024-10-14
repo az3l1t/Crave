@@ -41,11 +41,11 @@ func (ac *AuthController) LoginUser(c *gin.Context) {
 		return
 	}
 
-	token, err := ac.UserService.LoginUser(&request)
+	response, err := ac.UserService.LoginUser(&request)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"token": token})
+	c.JSON(http.StatusOK, gin.H{"token": response.Token})
 }

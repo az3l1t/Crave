@@ -5,6 +5,7 @@ import (
 	"auth-service/internal/dto"
 	"auth-service/internal/repository"
 	"auth-service/package/utils"
+	"errors"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -42,16 +43,16 @@ TODO LoginUser function implementation
 func (s *UserService) LoginUser(userDto *dto.LoginRequest) (*dto.LoginResponse, error) {
 	user, err := s.Repository.GetByEmail(userDto.Email)
 	if err != nil {
-		return nil, err
+		return nil, errors.New("first")
 	}
 
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(userDto.Passsword)); err != nil {
-		return nil, err
+		return nil, errors.New("2")
 	}
 
 	token, err := utils.GenerateJWT(user.ID)
 	if err != nil {
-		return nil, err
+		return nil, errors.New("3")
 	}
 
 	return &dto.LoginResponse{Token: token}, nil

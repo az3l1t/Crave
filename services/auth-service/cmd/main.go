@@ -3,6 +3,7 @@ package main
 import (
 	"auth-service/configs"
 	"auth-service/internal/delivery"
+	"auth-service/internal/domain"
 	"auth-service/internal/repository"
 	"auth-service/internal/usecase"
 	"fmt"
@@ -25,6 +26,10 @@ func main() {
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatalf("Error connecting to database %v", err)
+	}
+
+	if err := db.AutoMigrate(&domain.User{}); err != nil {
+		log.Fatalf("migration error: %v", err)
 	}
 
 	defer func() {
