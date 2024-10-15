@@ -29,6 +29,19 @@ services:
     ports:
       - "8080:8080"
 
+  order-service:
+    build:
+      context: ./services/order-service
+      dockerfile: Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - delivery_network
+    ports:
+      - "8081:8081"
+
+
 networks:
   delivery_network:
     driver: bridge
