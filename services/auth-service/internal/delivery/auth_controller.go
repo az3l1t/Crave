@@ -4,6 +4,7 @@ import (
 	"auth-service/internal/dto"
 	"auth-service/internal/usecase"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -46,6 +47,19 @@ func (ac *AuthController) LoginUser(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
+
+	token := response.Token
+	cookie := &http.Cookie{
+		Name:     "token",
+		Value:    token,
+		Expires:  time.Now().Add(24 * time.Hour),
+		HttpOnly: true,
+		Secure:   false,
+		SameSite: http.SameSiteDefaultMode,
+		Path:     "/",
+	}
+
+	http.SetCookie(c.Writer, cookie)
 
 	c.JSON(http.StatusOK, gin.H{"token": response.Token})
 }
