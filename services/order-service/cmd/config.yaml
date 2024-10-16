@@ -3,7 +3,7 @@ database:
   port: 5432
   user: "postgres"
   password: "Chemege1."
-  name: "users"
+  name: "orders"
 
 jwt:
   secret_key: "NOallxgp3p+DsZaC+nKs0g0K8q5uvmUKt7kX8hsyY2DlKgc3YipKPYYpXxlL9t+ALjvPVlIOzH639f20NcAY+m2k4iTGEdldWLsIyV+PyBfv2uWz0nh++KscldyPIo6z/lbgYeTWUwNIcx76YvzAbIZJpVfEonrbxt/vAElmeQfx7NkkTxY2RObaBCp/+q9vPu78lM6a9yl5BrmAEK6NK2fxS9sj+HkWgYSsmvzzgmStlSvN72vHVbvEaLEU/u+s7Ia3XGHoNErPWfPd+DTDT/beR7E7JjLbeUB+kFBjFFygzE6ZoThwXTkawZE3LRSBuyZ/OYpRKXspEF3tsHCZySA4X13dEF3Ar50tHiafjj0="
