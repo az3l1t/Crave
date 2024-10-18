@@ -17,6 +17,16 @@ services:
       timeout: 5s
       retries: 5
 
+  gateway:
+    build: ./services/api-gateway
+    ports:
+      - "5000:5000"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - delivery_network
+
   auth-service:
     build:
       context: ./services/auth-service
@@ -40,7 +50,6 @@ services:
       - delivery_network
     ports:
       - "8081:8081"
-
 
 networks:
   delivery_network:

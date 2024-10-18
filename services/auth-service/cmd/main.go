@@ -48,8 +48,11 @@ func main() {
 
 	r := gin.Default()
 
-	r.POST("/register", authController.RegisterUser)
-	r.POST("/login", authController.LoginUser)
+	authRoutes := r.Group("/auth")
+	{
+		authRoutes.POST("/register", authController.RegisterUser)
+		authRoutes.POST("/login", authController.LoginUser)
+	}
 
 	r.Run(":8080")
 }

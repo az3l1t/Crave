@@ -40,8 +40,11 @@ func main() {
 	r := gin.Default()
 
 	r.Use(middleware.AuthMiddleware())
-	r.POST("/orders", orderController.CreateOrder)
-	r.GET("/orders", orderController.GetOrders)
+	authRoutes := r.Group("/orders")
+	{
+		authRoutes.POST("/create", orderController.CreateOrder)
+		authRoutes.GET("/get", orderController.GetOrders)
+	}
 
 	r.Run(":8081")
 }
