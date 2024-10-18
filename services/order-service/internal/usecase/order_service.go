@@ -14,12 +14,7 @@ func NewOrderService(repo repository.OrderRepository) *OrderService {
 	return &OrderService{Repo: repo}
 }
 
-func (s *OrderService) CreateOrder(orderDto *dto.CreateOrderRequest) (*dto.CreateOrderResponse, error) {
-	order := &domain.Order{
-		UserID:   orderDto.UserID,
-		Products: orderDto.Products,
-	}
-
+func (s *OrderService) CreateOrder(order *domain.Order) (*dto.CreateOrderResponse, error) {
 	if err := s.Repo.Create(order); err != nil {
 		return nil, err
 	}

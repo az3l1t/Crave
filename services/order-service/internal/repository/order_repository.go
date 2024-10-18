@@ -34,7 +34,7 @@ func (r *GormOrderRepository) GetByID(id uint) (*domain.Order, error) {
 
 func (r *GormOrderRepository) GetAll(userID uint) ([]domain.Order, error) {
 	var orders []domain.Order
-	if err := r.DB.Where("user_id = ?", userID).Find(&orders).Error; err != nil {
+	if err := r.DB.Preload("Products").Where("user_id = ?", userID).Find(&orders).Error; err != nil {
 		return nil, err
 	}
 	return orders, nil

@@ -2,6 +2,7 @@ package delivery
 
 import (
 	"net/http"
+	"order-service/internal/domain"
 	"order-service/internal/dto"
 	"order-service/internal/usecase"
 
@@ -17,13 +18,21 @@ func NewOrderController(orderService *usecase.OrderService) *OrderController {
 }
 
 func (oc *OrderController) CreateOrder(c *gin.Context) {
+	userID, _ := c.Get("userID")
+
 	var request dto.CreateOrderRequest
+
 	if err := c.ShouldBindJSON(&request); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	response, err := oc.OrderService.CreateOrder(&request)
+	order := &domain.Order{
+		UserID:   userID.(uint),
+		Products: request.Products,
+	}
+
+	response, err := oc.OrderService.CreateOrder(order)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

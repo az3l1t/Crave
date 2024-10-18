@@ -3,7 +3,6 @@ package dto
 import "order-service/internal/domain"
 
 type CreateOrderRequest struct {
-	UserID   uint             `json:"user_id"`
 	Products []domain.Product `json:"products"`
 }
 

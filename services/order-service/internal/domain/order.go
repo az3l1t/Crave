@@ -16,3 +16,8 @@ type Product struct {
 	Price    float64 `json:"price"`
 	Quantity int     `json:"quantity"`
 }
+
+type OrderProduct struct {
+	OrderID   uint `gorm:"primaryKey"`
+	ProductID uint `gorm:"primaryKey"`
+}
